@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:setting/slider.dart';
+import 'slider/Sensitivityslider.dart';
 import './switchOff_On.dart';
 import "package:provider/provider.dart";
 import "Provider/value.dart";
-import 'Provider/value.dart';
+import 'slider/loadSlider.dart';
+import 'slider/resolveslider.dart';
 
 void main() {
   runApp(MultiProvider(
@@ -143,8 +144,7 @@ class MyHomePage extends StatelessWidget {
                                       style: TextStyle(
                                           fontSize: 20, color: Colors.black),
                                     ),
-                                    slider2(
-                                      tasks: "load",
+                                    loadSlider(
                                       min: 20,
                                       max: 100,
                                       interval: 10,
@@ -179,8 +179,7 @@ class MyHomePage extends StatelessWidget {
                                       style: TextStyle(
                                           fontSize: 20, color: Colors.black),
                                     ),
-                                    slider2(
-                                      tasks: "resolve",
+                                    resolveSlider(
                                       min: 4,
                                       max: 20,
                                       interval: 2,
@@ -215,8 +214,7 @@ class MyHomePage extends StatelessWidget {
                                       style: TextStyle(
                                           fontSize: 20, color: Colors.black),
                                     ),
-                                    slider2(
-                                      tasks: "sensitivity",
+                                    SensitivitySlider(
                                       min: 0,
                                       max: 20,
                                       interval: 4,

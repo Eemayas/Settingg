@@ -12,7 +12,7 @@ class SensitivityValue with ChangeNotifier {
 class resolveValue with ChangeNotifier {
   int _rvalue = 1;
   int get rvalue => _rvalue;
-  void schange(int value) {
+  void rchange(int value) {
     _rvalue = value;
     notifyListeners();
   }
@@ -21,7 +21,7 @@ class resolveValue with ChangeNotifier {
 class loadValue with ChangeNotifier {
   int _lvalue = 1;
   int get lvalue => _lvalue;
-  void schange(int value) {
+  void lchange(int value) {
     _lvalue = value;
     notifyListeners();
   }

@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:setting/slider.dart';
 import './switchOff_On.dart';
+import "package:provider/provider.dart";
+import "Provider/value.dart";
+import 'Provider/value.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => SensitivityValue()),
+      ChangeNotifierProvider(create: (_) => resolveValue()),
+      ChangeNotifierProvider(create: (_) => loadValue())
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -14,6 +25,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        sliderTheme: SliderThemeData(
+          showValueIndicator: ShowValueIndicator.always,
+        ),
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(),
@@ -83,11 +97,139 @@ class MyHomePage extends StatelessWidget {
         padding: EdgeInsets.only(top: 7),
         child: Column(
           children: [
-            ListTileCard(title: "Select Theme"),
-            ListTileCard(title: "Thickness Control"),
-            ListTileCard(title: "Control"),
-            ListTileCard(title: "Default Window"),
-            ListTileCard(title: "While opening the case"),
+            ListTileCard(
+              trailing: "",
+              OnTap: () => null,
+              title: "Select Theme",
+            ),
+            ListTileCard(
+              trailing: "",
+              title: "Thickness Control",
+              OnTap: () => null,
+            ),
+            ListTileCard(
+              trailing: "",
+              title: "Control",
+              OnTap: () => null,
+            ),
+            ListTileCard(
+              trailing: "",
+              title: "Default Window",
+              OnTap: () => null,
+            ),
+            ListTileCard(
+              trailing: "",
+              title: "While opening the case",
+              OnTap: () => null,
+            ),
+            ListTileCard(
+              trailing: "${context.watch<loadValue>().lvalue}",
+              title: "Max Image Load Buffer",
+              OnTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => Center(
+                          child: Material(
+                            child: Container(
+                              color: Colors.white,
+                              height: 150.0,
+                              width: 300,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 20.0),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Max Image Load Buffer",
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.black),
+                                    ),
+                                    slider2(
+                                      tasks: "load",
+                                      min: 20,
+                                      max: 100,
+                                      interval: 10,
+                                      step: 10,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ));
+              },
+            ),
+            ListTileCard(
+              trailing: "${context.watch<resolveValue>().rvalue}",
+              title: "Max Image Resolve Buffer",
+              OnTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => Center(
+                          child: Material(
+                            child: Container(
+                              color: Colors.white,
+                              height: 150.0,
+                              width: 300,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 20.0),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Max Image Resolve Buffer",
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.black),
+                                    ),
+                                    slider2(
+                                      tasks: "resolve",
+                                      min: 4,
+                                      max: 20,
+                                      interval: 2,
+                                      step: 2,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ));
+              },
+            ),
+            ListTileCard(
+              trailing: "${context.watch<SensitivityValue>().svalue}",
+              title: "Default Sensitivity",
+              OnTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => Center(
+                          child: Material(
+                            child: Container(
+                              color: Colors.white,
+                              height: 150.0,
+                              width: 300,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 20.0),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Sensitivity ",
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.black),
+                                    ),
+                                    slider2(
+                                      tasks: "sensitivity",
+                                      min: 0,
+                                      max: 20,
+                                      interval: 4,
+                                      step: 1,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ));
+              },
+            ),
           ],
         ),
       ),
@@ -96,22 +238,36 @@ class MyHomePage extends StatelessWidget {
 }
 
 class ListTileCard extends StatelessWidget {
-  ListTileCard({required this.title, onTap});
+  ListTileCard(
+      {required this.title, required this.OnTap, required this.trailing});
   late String title;
+  late Function() OnTap;
+  final String trailing;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: EdgeInsets.only(left: 20),
-          child: Container(
-              height: 50, alignment: Alignment.centerLeft, child: Text(title)),
+        ListTile(
+          trailing: Text(trailing),
+          title: Text(title),
+          onTap: OnTap,
         ),
+        // return Container(
+        //   child: Column(
+        //     children: [
+        //       Padding(
+        //         padding: EdgeInsets.only(left: 20),
+        //         child: Container(
+        //             height: 50,
+        //             alignment: Alignment.centerLeft,
+        //             child: Text(title)),
+        //       ),
         Divider(
           thickness: 2,
         ),
       ],
+      // ),
     );
   }
 }
